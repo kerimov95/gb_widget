@@ -1,0 +1,47 @@
+{
+  "development": {
+    "username": "globiance_db",
+    "password": "M4lt4!23!",
+    "database": "globiance_staging",
+    "host": "192.168.1.9",
+    "port": 14433,
+    "dialect": "mssql",
+    "logging": false,
+    "operatorsAliases": 0,
+    "dialectOptions": {
+      "options": {
+        "requestTimeout": 300000
+      }
+    }
+  },
+  "test": {
+    "username": "globiance_db",
+    "password": "M4lt4!23!",
+    "database": "globiance_staging",
+    "host": "192.168.1.9",
+    "port": 14433,
+    "dialect": "mssql",
+    "logging": false,
+    "operatorsAliases": 0,
+    "dialectOptions": {
+      "options": {
+        "requestTimeout": 300000
+      }
+    }
+  },
+  "production": {
+    "username": "globiance_db",
+    "password": "M4lt4!23!",
+    "database": "globiance_staging",
+    "host": "192.168.1.9",
+    "port": 14433,
+    "dialect": "mssql",
+    "logging": false,
+    "operatorsAliases": 0,
+    "dialectOptions": {
+      "options": {
+        "requestTimeout": 300000
+      }
+    }
+  }
+}

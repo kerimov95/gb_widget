@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        input {
+            width: 500px;
+        }
+
+        .input-lb {
+            width: 100px;
+            font-weight: bold;
+        }
+
+        .input-wrap {
+            margin-bottom: 10px;
+        }
+
+        .checkout-form {
+            margin: 20px;
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        _payload = {
+            amountInUSD: 100,
+            note: "Test payment",
+            apikey: "612960f9-0f37-43c6-b9a0-d8b706ed0de5"
+        }
+
+        window.onload = () => {
+            document.getElementById("amount").value = _payload.amountInUSD;
+            document.getElementById("note").value = _payload.note;
+            document.getElementById("key").value = _payload.apikey;
+        }
+
+        const _start = () => {
+            window.Start(_payload);
+        }
+
+        function updateAmount() {
+            const value = document.getElementById("amount").value;
+            _payload.amountInUSD = value
+        }
+
+        function updateNote() {
+            const value = document.getElementById("note").value;
+            _payload.note = value
+        }
+
+        function updateKey() {
+            const value = document.getElementById("key").value;
+            _payload.apikey = value
+        }
+
+    </script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="widget"></div>
+
+    <form class="checkout-form">
+        <H3>CHECKOUT FORM</H3>
+        <div class="input-wrap">
+            <div class="input-lb">
+                Amount
+            </div>
+            <input placeholder="ENTER AMOUNT" id="amount" type="number" onchange="updateAmount()"><br />
+        </div>
+        <div class="input-wrap">
+            <div class="input-lb">
+                Note
+            </div>
+            <input placeholder="ENTER NOTE" id="note" type="text" onchange="updateNote()"><br />
+        </div>
+        <div class="input-wrap">
+            <div class="input-lb">
+                API Key
+            </div>
+            <input placeholder="ENTER KEY" id="key" type="text" onchange="updateKey()"><br />
+        </div>
+        <button onclick="_start()" type="button" style="width: 100px;" class="btn btn-primary">pay now</button>
+    </form>
+    <script src="./widget.js"></script>
+</body>
+
+</html>

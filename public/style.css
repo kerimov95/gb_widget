@@ -1,0 +1,274 @@
+.card {
+  margin-top: 28px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  min-width: 435px;
+  max-width: 435px;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: none;
+  background-color: white;
+  padding-bottom: 10px;
+}
+
+.card__title {
+  height: 70px;
+  background-color: #060526;
+  border-radius: 15px 15px 0 0;
+  background-image: url("./images/logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card__header {
+  background-color: #100F31;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.card__header__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #A6A5C5;
+  font-weight: bold;
+}
+
+.card__header__row span {
+  color: white;
+}
+
+.waiting__confirm {
+  margin: 10px;
+  padding: 5px 0;
+}
+
+.coin__row {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: start;
+}
+
+.coin__row p {
+  margin: 0 0 0 5px;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 13px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  background-color: #0FA2C9;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+
+.image_outer_container {
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 50%;
+  position: relative;
+}
+
+.image_inner_container {
+  border-radius: 50%;
+  padding: 5px;
+  background: #833ab4;
+  background: -webkit-linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
+  background: linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
+}
+
+.image_inner_container img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.qr__code {
+  margin: 10px;
+}
+
+.image_outer_container .green_icon {
+  background-color: #4cd137;
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+  height: 30px;
+  width: 30px;
+  border: 5px solid white;
+  border-radius: 50%;
+}
+
+/* list  */
+
+.coinRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  text-align: left !important;
+  overflow: hidden;
+}
+
+.CoinList {
+  border: 1px solid #80808066;
+  /* font-size: 20px; */
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.modal-dialog {
+  pointer-events: all !important;
+}
+
+/* loader */
+
+.globiance-loader {
+  text-align: center;
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hide-loader {
+  display: none;
+}
+
+/* model design changes */
+
+.bg-adderss {}
+
+.color {
+  color: #000;
+}
+
+.bg-coinlist {
+  background-color: #fff;
+}
+
+.timer-color {
+  color: red;
+  font-weight: 800;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.paid {
+  color: #4cd137;
+  font-weight: 600;
+}
+
+.circle {
+  margin: 50px auto;
+  height: 130px;
+  width: 130px;
+  background-color: #02B4EB;
+  border-radius: 50%;
+  border: 20px #CCF0FB solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://globiance-back.dev.beejee.org/images/ok.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.circle__cross {
+  margin: 50px auto;
+  height: 130px;
+  width: 130px;
+  background-color: #02B4EB;
+  border-radius: 50%;
+  border: 20px #CCF0FB solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://globiance-back.dev.beejee.org/images/cross.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.payment__status {
+  font-size: 30px;
+  color: #403F72;
+  margin: 50px 0;
+}
+
+.order__id {
+  font-size: 20px;
+  color: #403F72;
+}
+
+.outline__btn {
+  background-color: white;
+  color: #0FA2C9;
+  border: 3px #0FA2C9 solid;
+}
+
+.globiance_payment_modal_card_title {
+  text-align: end;
+  color: white;
+}
+
+.globiance_payment_modal_icon_wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: white;
+}
+
+.globiance_payment_modal_icon_span {
+  margin: 30px;
+  cursor: pointer;
+}
+
+.globiance_payment_modal_icon_span a {
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
