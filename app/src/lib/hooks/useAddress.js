@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
-import { API_URL } from '../const';
+import { getAddress } from "../getAddress";
 
-export const useMerchant = (keyAPI) => {
+export const useAddrress = (uniqueId, symbol) => {
 
-    const [merchant, setMerchant] = useState({});
+    const [address, setAddress] = useState();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
         let isMounted = true;
 
-        if (keyAPI) {
+        if (uniqueId && symbol) {
+
             setLoading(true);
-            fetch(`${API_URL}/merchant?key=${keyAPI}`)
+
+            getAddress(uniqueId, symbol)
                 .then(res => res.json())
-                .then(data => {
+                .then(checkOutAdress => {
                     if (isMounted) {
-                        setMerchant(data);
+                        setAddress(checkOutAdress)
                     }
                 })
                 .catch((error) => {
                     if (isMounted) {
-                        console.error(error);
+                        console.error(error)
                     }
                 })
                 .finally(() => {
@@ -30,7 +32,12 @@ export const useMerchant = (keyAPI) => {
                     }
                 })
         }
-    }, [keyAPI])
 
-    return [merchant, loading];
+        return () => { isMounted = false }
+
+    }, [uniqueId, symbol]);
+
+
+    return [address, loading];
+
 }

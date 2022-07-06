@@ -6,18 +6,32 @@ export const usePrices = (amountInUSD) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+
+        let isMounted = true;
+
         if (amountInUSD) {
             setLoading(true);
             fetch(`${API_URL}/invoicing/getprices?amountInUSD=${amountInUSD}`)
                 .then(res => res.json())
                 .then(data => {
-                    setPrices(data);
+                    if (isMounted) {
+                        setPrices(data);
+                    }
                 })
-                .catch()
+                .catch((error) => {
+                    if (isMounted) {
+                        console.error(error);
+                    }
+                })
                 .finally(() => {
-                    setLoading(false);
+                    if (isMounted) {
+                        setLoading(false);
+                    }
                 })
         }
+
+        return () => { isMounted = false }
+
     }, [amountInUSD])
 
     return [prices, loading];
