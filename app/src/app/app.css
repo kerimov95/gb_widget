@@ -1,0 +1,21 @@
+.btn-close {
+    opacity: 1;
+    filter: invert(100%) brightness(100%);
+}
+
+.modal-content {
+    border-radius: 1rem
+}
+
+.modal-header {
+    color: white;
+    background-color: #060526;
+}
+
+.redius-rounded-top {
+    border-radius: 0.9rem 0.9rem 0 0
+}
+
+.redius-rounded-bottom {
+    border-radius: 0 0 0.9rem 0.9rem
+}

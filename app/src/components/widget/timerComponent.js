@@ -1,4 +1,4 @@
-export const Timer = ({ duration, onExpire = () => { } }) => {
+export const TimerComponent = ({ duration, onExpire = () => { } }) => {
 
     const [time, setTime] = useState([duration - 1, 59]);
 

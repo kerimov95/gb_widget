@@ -42,16 +42,10 @@ const createOrder = async (req, res) => {
             duration: merchant.duration,
             confirmation: merchant.confirmation,
             merchantPrice: amountInUSD,
-            status: 'pending',
+            status: 'pending'
         })
 
-        res.json({
-            order: newOrder,
-            merchant: {
-                labelName: merchant.labelName,
-                logo: merchant.logo
-            }
-        } || {});
+        res.json({ ...newOrder.dataValues, labelName: merchant.labelName } || {});
     }
     catch (ex) {
         res.status(500).json({

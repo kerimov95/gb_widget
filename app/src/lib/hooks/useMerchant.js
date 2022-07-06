@@ -5,6 +5,7 @@ export const useMerchant = (keyAPI) => {
 
     const [merchant, setMerchant] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState();
 
     useEffect(() => {
 
@@ -22,6 +23,7 @@ export const useMerchant = (keyAPI) => {
                 .catch((error) => {
                     if (isMounted) {
                         console.error(error);
+                        setError('Failed to get merchant')
                     }
                 })
                 .finally(() => {
@@ -32,5 +34,5 @@ export const useMerchant = (keyAPI) => {
         }
     }, [keyAPI])
 
-    return [merchant, loading];
+    return [merchant, loading, error];
 }

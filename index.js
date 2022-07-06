@@ -5,7 +5,7 @@ app.use(bodyParser.json({ type: 'application/json' }));
 
 const PORT = process.env.PORT || 5000;
 
-app.use('/', express.static(__dirname + '/public'));
+app.use('/test', express.static(__dirname + '/public'));
 require('./src/routes')(app);
 
 app.listen(PORT, () => {

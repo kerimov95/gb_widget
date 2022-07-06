@@ -4,6 +4,7 @@ import { API_URL } from '../const';
 export const usePrices = (amountInUSD) => {
     const [prices, setPrices] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState();
 
     useEffect(() => {
 
@@ -21,6 +22,7 @@ export const usePrices = (amountInUSD) => {
                 .catch((error) => {
                     if (isMounted) {
                         console.error(error);
+                        setError('Failed to get prices')
                     }
                 })
                 .finally(() => {
@@ -28,11 +30,13 @@ export const usePrices = (amountInUSD) => {
                         setLoading(false);
                     }
                 })
+        } else {
+            setError('Failed to create new order')
         }
 
         return () => { isMounted = false }
 
     }, [amountInUSD])
 
-    return [prices, loading];
+    return [prices, loading, error];
 }

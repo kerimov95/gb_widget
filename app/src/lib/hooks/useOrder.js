@@ -3,7 +3,8 @@ import { API_URL } from '../const';
 
 export const useOrder = (keyAPI, amountInUSD, note) => {
 
-    const [order, setOrder] = useState({});
+    const [order, setOrder] = useState();
+    const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -24,6 +25,7 @@ export const useOrder = (keyAPI, amountInUSD, note) => {
                 .catch((error) => {
                     if (isMounted) {
                         console.error(error);
+                        setError('Failed to create new order')
                     }
                 })
                 .finally(() => {
@@ -32,10 +34,15 @@ export const useOrder = (keyAPI, amountInUSD, note) => {
                     }
                 })
         }
+        else {
+            if (isMounted) {
+                setError('Failed to create new order')
+            }
+        }
 
         return () => { isMounted = false }
 
     }, [keyAPI, amountInUSD, note])
 
-    return [order, loading];
+    return [order, loading, error];
 }

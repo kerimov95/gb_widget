@@ -1,0 +1,23 @@
+.order-component_header {
+    color: #A6A5C5;
+    background: #100F31;
+    min-height: 4.5rem;
+    max-height: 4.5rem;
+}
+
+.order-component_logo {
+    min-height: 13rem;
+    max-height: 13rem;
+    height: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+}
+
+.order-component_img {
+    max-width: 10rem;
+    max-height: 10rem;
+    min-width: 10rem;
+    min-height: 10rem
+}
