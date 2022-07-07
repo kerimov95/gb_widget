@@ -1,5 +1,5 @@
 import React from "react";
-import { SpinnerCenter } from '../spinnerCenter';
+import { SpinnerCenter } from './../spinnerCenter';
 import { Context } from '../../app/app';
 
 export const OrderComponent = () => {

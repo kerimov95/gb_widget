@@ -8,12 +8,12 @@ const PricesComponent = ({ amountInUSD, order }) => {
     const [prices, loading, error] = usePrices(amountInUSD);
 
     return <Context.Consumer>
-        {({ tab: [, setCurrentTab], symbol: [, setSymbol] }) => <div className='w-100 m-0'>
+        {({ tab: [, setCurrentTab], currency: [, setCurrency] }) => <div className='w-100 m-0'>
             {
                 !loading ? prices.map((price) => (<div
                     onClick={() => {
                         setCurrentTab('payment');
-                        setSymbol(price.symbol);
+                        setCurrency(price);
                     }}
                     role='button'
                     key={price.symbol}

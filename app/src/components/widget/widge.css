@@ -21,3 +21,25 @@
     min-width: 10rem;
     min-height: 10rem
 }
+
+.address-component {
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.successful-component {
+    margin: 50px auto;
+    height: 130px;
+    width: 130px;
+    background-color: #02B4EB;
+    border-radius: 50%;
+    border: 20px #CCF0FB solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('./../../../../public/images/ok.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}

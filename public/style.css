@@ -1,19 +1,16 @@
-input {
-  width: 500px;
-}
-
-.input-lb {
-  width: 100px;
-  font-weight: bold;
-}
-
-.input-wrap {
-  margin-bottom: 10px;
-}
-
 .checkout-form {
-  margin: 20px;
-  border: 1px solid black;
-  padding: 10px;
+  margin: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 20px;
   border-radius: 5px;
+  max-width: 550px;
+  min-width: 550px;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+
+body {
+  background-image: url(./images/casino-900x600.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }

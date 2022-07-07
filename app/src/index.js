@@ -7,7 +7,7 @@ export const start = (payload) => {
     root.render(<App {...{ ...payload, root }} />);
 }
 
-start({ amountInUSD: 100, note: 'Test payment', apikey: '612960f9-0f37-43c6-b9a0-d8b706ed0de5' })
+//start({ amountInUSD: 100, note: 'Test payment', apikey: '612960f9-0f37-43c6-b9a0-d8b706ed0de5' })
 
 window.Start = start;
 

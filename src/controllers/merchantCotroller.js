@@ -94,7 +94,7 @@ const createAddress = async (req, res) => {
             isActive: true
         })
 
-        res.json(newMerchantAddress);
+        res.json({ ...newMerchantAddress.dataValues, duration: merchantCheckout.duration });
     }
     catch (ex) {
         res.status(500).json({

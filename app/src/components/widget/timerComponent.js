@@ -1,16 +1,12 @@
-export const TimerComponent = ({ duration, onExpire = () => { } }) => {
+import React, { useState, useEffect } from "react";
+
+export const TimerComponent = ({ duration }) => {
 
     const [time, setTime] = useState([duration - 1, 59]);
 
     useEffect(() => {
-        if (time[0] === 0 && time[1] === 0) {
-            onExpire(true);
-        }
-    }, [time])
-
-    useEffect(() => {
         const interval = setInterval(() => {
-            setTime(time => {
+            setTime((time) => {
                 const newSeconds = time[1] - 1;
                 if (newSeconds > 0) {
                     return [time[0], newSeconds];
@@ -34,9 +30,9 @@ export const TimerComponent = ({ duration, onExpire = () => { } }) => {
         }
     }, [])
 
-    return <>
+    return <div className="mt-2">
         {
-            time[0] > 0 || time[1] > 0 ? <p>
+            time[0] > 0 || time[1] > 0 ? <p className="m-0">
                 <span >This payment will expire in </span>
                 <span style={{ color: '#E57C7C' }} >{`${time[0]}:${time[1]}`}</span>
             </p> : <div style={{
@@ -46,6 +42,5 @@ export const TimerComponent = ({ duration, onExpire = () => { } }) => {
             </div>
 
         }
-    </>
-
+    </div>
 }

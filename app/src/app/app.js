@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ModalComponent } from '../components/widget';
 import { useOrder } from '../lib/hooks';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,7 +10,7 @@ export const App = ({ apikey, amountInUSD, note, root }) => {
 
     const [order, orderLoading, error] = useOrder(apikey, amountInUSD, note);
     const [currentTab, setCurrentTab] = useState('order');
-    const [symbol, setSymbol] = useState();
+    const [currency, setCurrency] = useState();
 
     return <Context.Provider value={{
         apikey,
@@ -21,7 +21,7 @@ export const App = ({ apikey, amountInUSD, note, root }) => {
         orderLoading,
         error,
         tab: [currentTab, setCurrentTab],
-        symbol: [symbol, setSymbol]
+        currency: [currency, setCurrency]
     }}>
         <ModalComponent />
     </Context.Provider >

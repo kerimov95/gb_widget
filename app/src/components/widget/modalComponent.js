@@ -3,7 +3,9 @@ import { Modal } from 'react-bootstrap';
 import { OrderComponent } from "./orderComponent";
 import PricesComponent from './pricesComponent';
 import { MerchantComponent } from './merchantComponent';
+import { AddressComponent } from './addressComponent';
 import { Context } from '../../app/app';
+import { SuccessfulComponent } from './successfulComponent';
 
 const Switch = ({ tabName, children }) => {
     return <Context.Consumer>
@@ -19,7 +21,7 @@ const Switch = ({ tabName, children }) => {
 export const ModalComponent = () => {
 
     return <Context.Consumer>
-        {({ tab: [currentTab], root }) => <Modal
+        {({ root }) => <Modal
             show={true} onHide={() => { root.unmount() }}
         >
             <Modal.Header
@@ -32,22 +34,39 @@ export const ModalComponent = () => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="redius-rounded-bottom p-0">
+                <OrderComponent />
                 <Switch tabName="order">
                     <MainTab />
                 </Switch>
                 <Switch tabName="payment">
-                    <Payment />
+                    <PaymentTab />
+                </Switch>
+                <Switch tabName="paid">
+                    <PaidTab />
                 </Switch>
             </Modal.Body>
         </Modal >}
     </Context.Consumer>
 }
 
-const Payment = () => {
+const PaidTab = () => {
+    return <SuccessfulComponent />
+}
+
+const PaymentTab = () => {
     return <Context.Consumer>
-        {({ order: { uniqueId }, symbol: [currentSymbol] }) => <>
-            <div>{uniqueId} {currentSymbol}</div>
-        </>
+        {({
+            order: { uniqueId, duration },
+            currency: [currentCurrency],
+            tab: [, setCurrentTab]
+        }) => <>
+                <AddressComponent {...{
+                    uniqueId,
+                    currentCurrency,
+                    duration,
+                    setCurrentTab
+                }} />
+            </>
         }
     </Context.Consumer>
 }
@@ -55,7 +74,6 @@ const Payment = () => {
 const MainTab = () => {
     return <Context.Consumer>
         {({ apikey, amountInUSD, order }) => <>
-            <OrderComponent />
             <MerchantComponent
                 keyAPI={apikey}
             />

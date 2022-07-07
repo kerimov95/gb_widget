@@ -9,28 +9,34 @@
 <body>
     <div id="widget"></div>
 
-    <form class="checkout-form">
-        <H3>CHECKOUT FORM</H3>
-        <div class="input-wrap">
-            <div class="input-lb">
-                Amount
+    <div class="d-flex justify-content-center p-3">
+        <form class="checkout-form">
+            <h3 class="text-white">CHECKOUT FORM</h3>
+            <div class="mt-1">
+                <label class="form-label text-white">
+                    Amount
+                </label>
+                <input class="form-control" placeholder="ENTER AMOUNT" id="amount" type="number"
+                    onchange="updateAmount()"><br />
             </div>
-            <input placeholder="ENTER AMOUNT" id="amount" type="number" onchange="updateAmount()"><br />
-        </div>
-        <div class="input-wrap">
-            <div class="input-lb">
-                Note
+            <div class="mt-1">
+                <label class="form-label text-white">
+                    Note
+                </label>
+                <input class="form-control" placeholder="ENTER NOTE" id="note" type="text"
+                    onchange="updateNote()"><br />
             </div>
-            <input placeholder="ENTER NOTE" id="note" type="text" onchange="updateNote()"><br />
-        </div>
-        <div class="input-wrap">
-            <div class="input-lb">
-                API Key
+            <div class="mt-1">
+                <label class="form-label  text-white">
+                    API Key
+                </label>
+                <input class="form-control" placeholder="ENTER KEY" id="key" type="text" onchange="updateKey()"><br />
             </div>
-            <input placeholder="ENTER KEY" id="key" type="text" onchange="updateKey()"><br />
-        </div>
-        <button onclick="_start()" type="button" style="width: 100px;" class="btn btn-primary">pay now</button>
-    </form>
+            <button onclick="_start()" type="button" style="width: 100px;" class="btn btn-secondary">pay now</button>
+        </form>
+
+    </div>
+
     <script>
         _payload = {
             amountInUSD: 100,

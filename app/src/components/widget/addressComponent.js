@@ -1,153 +1,85 @@
 import React, { useEffect } from "react";
 import QRCode from "react-qr-code";
-import { Timer } from "./timerComponent";
-import { checkPayment } from "../../lib/checkPayment";
-import { hookPayment } from '../../lib/hookPayment';
-import web3 from 'web3/dist/web3.min.js';
-import abi from '../../lib/tokenABI.json';
+import { TimerComponent } from "./timerComponent";
+import { SpinnerCenter } from './../spinnerCenter';
+import { useAddrress } from '../../lib/hooks/useAddress';
+import { PayWithWalletComponent } from './payWithWalletComponent';
 
-export const AddressComponent = ({ uniqueId, currency }) => {
+export const AddressComponent = ({ uniqueId, currentCurrency, duration, setCurrentTab }) => {
 
-    const orderAddress = useAddrress(uniqueId, currency.symbol);
-    const [expire, setExpire] = useState();
+    const [orderAddress, loading, isPaid, isExpired] = useAddrress(uniqueId, currentCurrency.symbol);
 
     useEffect(() => {
-        let intervalId;
+        let isMounted = true;
 
-        if (!expire && !isPaid) {
+        if (isPaid) {
+            if (isMounted) {
+                setCurrentTab('paid')
+            }
+        }
 
-            if (currency) {
-                intervalId = setInterval(function () {
-                    if (orderAddress) {
-                        checkPayment(orderAddress.uniqueId)
-                            .then(res => res.json())
-                            .then(res => {
-                                if (res?.orderStatus) {
-                                    setIsPaid(true);
-                                }
-                            })
-                    }
-                }, 5000)
+        if (isExpired) {
+            if (isMounted) {
+                //setCurrentTab('expired')
             }
         }
 
         return () => {
-            if (intervalId) {
-                clearInterval(intervalId);
-            }
+            isMounted = false
         }
-    }, [currency, expire, orderAddress, isPaid])
+    }, [isPaid, isExpired])
 
-    const handlePayWithWallet = async () => {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-        if (currency.type === 'coin') {
-
-            const amount = parseInt(web3.utils.toWei(currency?.amount.toString(), "ether")).toString(16);
-
-            window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [
-                    {
-                        from: accounts[0],
-                        to: orderAddress?.address,
-                        value: amount
-                    },
-                ],
-            }).then((txHash) => {
-                setTimeout(() => {
-                    hookPayment(txHash, currency.symbol);
-                }, 10000)
-
-            }).catch((error) => console.error);
-        }
-
-        if (currency.type === 'token') {
-
-            const amount = web3.utils.toWei(currency?.amount.toString(), "ether");
-
-            const _web3 = new web3(window.ethereum);
-            const tokenContract = new _web3.eth.Contract(abi, currency.contractAddress, {
-                from: accounts[0]
-            });
-
-            tokenContract.methods.transfer(orderAddress?.address, amount).send({
-                from: accounts[0],
-            }, (error, transactionHash) => {
-                if (error) {
-                    return;
+    return <div className="address-component">
+        {
+            !loading ? <div className="w-100 p-3 d-flex justify-content-center align-items-center flex-column">
+                <div className="border p-2 rounded-3 w-100">
+                    {orderAddress?.coinName}
+                </div>
+                {
+                    orderAddress ?
+                        <QRCode className="m-3" size={150} value={orderAddress?.address || ""} />
+                        : null
                 }
-                setTimeout(() => {
-                    hookPayment(transactionHash, currency.symbol);
-                }, 15000)
-            });
-        }
-
-    }
-
-
-    return <div style={{ padding: '10px' }}>
-        <div className="row coinRow CoinList bg-coinlist">
-            <div style={{
-                padding: '5px'
-            }}>{currency.symbol}</div>
-        </div>
-        {
-            orderAddress ? <QRCode
-                style={{
-                    margin: '10px'
-                }}
-                size={150} value={orderAddress?.address} /> : null
-        }
-        <div className="coin__row">
-            <p>Amount</p>
-            <div className="row coinRow CoinList bg-coinlist">{currency.amount}</div>
-        </div>
-        <div className="coin__row">
-            <p>Conversion rate</p>
-            <div style={{ color: '#557949' }} className="row coinRow CoinList bg-coinlist">{currency.amount}</div>
-        </div>
-        {
-            orderAddress ? <div className="coin__row">
-                <p>{currency.symbol} Address</p>
-                <div className="row coinRow CoinList bg-coinlist">{orderAddress?.address}</div>
-            </div> : null
-        }
-        {
-            currency.wallet ? <div>
-                <button
-                    onClick={handlePayWithWallet}
-                    className="btn btn-primary"
-                >
-                    Pay with wallet
-                </button>
-            </div> : null
-        }
-        {
-            order?.order?.duration ? <>
-                <div className="coin__row">
-                    <p style={{ color: 'silver' }}>Payment request is valid for
-                        <span style={{ marginLeft: '3px', color: '#E57C7C' }}>
-                            {order.order.duration} minutes
+                <div className="mt-3  w-100">
+                    <label className="form-label">Amount</label>
+                    <div className="border p-2 rounded-3 w-100">
+                        {orderAddress?.amountInCoin}
+                    </div>
+                </div>
+                <div className="mt-3  w-100">
+                    <label className="form-label">Conversion rate</label>
+                    <div className="border p-2 rounded-3 w-100">
+                        {orderAddress?.amountInCoin}
+                    </div>
+                </div>
+                <div className="mt-3  w-100">
+                    <label className="form-label">BTC Adress</label>
+                    <div className="border p-2 rounded-3 w-100">
+                        {orderAddress?.address}
+                    </div>
+                </div>
+                <div className="w-100 mt-3 text-secondary">
+                    <h6>Payment request is valid for
+                        <span className="text-danger">
+                            {` ${duration} minutes`}
                         </span>
-                    </p>
+                    </h6>
                 </div>
-                <div style={{
-                    marginTop: '10px'
-                }}>
-                    <Timer
-                        onExpire={() => {
-                            setExpire(true);
-                        }}
-                        duration={order?.order?.duration}
-                    />
+                {
+                    (currentCurrency?.wallet && orderAddress) ?
+                        <PayWithWalletComponent
+                            amount={orderAddress?.amountInCoin}
+                            address={orderAddress?.address}
+                            currency={currentCurrency}
+                        /> : null
+                }
+                {
+                    orderAddress ? <TimerComponent duration={duration} /> : null
+                }
+                <div className="mt-2 text-secondary w-100 text-center">
+                    <h6> Please pay as soon as possible to avoid rate expiry.</h6>
                 </div>
-            </> : null
+            </div > : <SpinnerCenter />
         }
-        <div className="coin__row">
-            <p style={{
-                color: 'silver'
-            }}>Please pay as soon as possible to avoid rate expiry.</p>
-        </div>
-    </div>
+    </div >
 }
