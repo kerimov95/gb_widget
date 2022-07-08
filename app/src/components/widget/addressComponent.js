@@ -7,7 +7,7 @@ import { PayWithWalletComponent } from './payWithWalletComponent';
 
 export const AddressComponent = ({ uniqueId, currentCurrency, duration, setCurrentTab }) => {
 
-    const [orderAddress, loading, isPaid, isExpired] = useAddrress(uniqueId, currentCurrency.symbol);
+    const [orderAddress, loading, isPaid] = useAddrress(uniqueId, currentCurrency.symbol);
 
     useEffect(() => {
         let isMounted = true;
@@ -18,16 +18,10 @@ export const AddressComponent = ({ uniqueId, currentCurrency, duration, setCurre
             }
         }
 
-        if (isExpired) {
-            if (isMounted) {
-                //setCurrentTab('expired')
-            }
-        }
-
         return () => {
             isMounted = false
         }
-    }, [isPaid, isExpired])
+    }, [isPaid])
 
     return <div className="address-component">
         {

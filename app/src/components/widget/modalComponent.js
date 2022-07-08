@@ -6,6 +6,8 @@ import { MerchantComponent } from './merchantComponent';
 import { AddressComponent } from './addressComponent';
 import { Context } from '../../app/app';
 import { SuccessfulComponent } from './successfulComponent';
+import { GlobianceQRComponent } from './globianceQRComponent';
+import { GlobianceAuthComponent } from './globianceAuthComponent/globianceAuthComponent';
 
 const Switch = ({ tabName, children }) => {
     return <Context.Consumer>
@@ -44,6 +46,12 @@ export const ModalComponent = () => {
                 <Switch tabName="paid">
                     <PaidTab />
                 </Switch>
+                <Switch tabName="globianceWallet">
+                    <GlobianceQRComponent />
+                </Switch>
+                <Switch tabName="globianceAuth">
+                    <GlobianceAuthComponent />
+                </Switch>
             </Modal.Body>
         </Modal >}
     </Context.Consumer>
@@ -73,15 +81,22 @@ const PaymentTab = () => {
 
 const MainTab = () => {
     return <Context.Consumer>
-        {({ apikey, amountInUSD, order }) => <>
+        {({ apikey, amountInUSD, order, tab: [, setCurrentTab] }) => <>
             <MerchantComponent
                 keyAPI={apikey}
             />
             {
                 order ? <div
-                    className="d-flex justify-content-center mb-3 p-3"
+                    className="d-flex flex-column justify-content-center mb-3 p-3"
                 >
                     <PricesComponent {...{ amountInUSD, order }} />
+                    <button
+                        type="button"
+                        className="btn btn-secondary w-100 mt-3 p-3"
+                        onClick={() => setCurrentTab("globianceWallet")}
+                    >
+                        Pay with Globiance wallet
+                    </button>
                 </div> : null
             }
         </>}
