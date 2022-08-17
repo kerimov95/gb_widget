@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useCheckOtp } from '../../../lib/hooks/useCheckOtp';
 import { SpinnerCenter } from '../../spinnerCenter';
 import { Context } from '../../../app/app';
@@ -14,6 +14,12 @@ export const OtpComponent = ({ login }) => {
     const [Otp, setOtp] = useState("");
 
     useEffect(() => {
+        if (token) {
+            setCurrentTab('whitelist')
+        }
+    }, [token])
+
+    useEffect(() => {
         if (user) {
             setToken(user);
         }
@@ -25,9 +31,29 @@ export const OtpComponent = ({ login }) => {
         }
     }, [Otp])
 
+    const inputRef = useRef();
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [inputRef])
+
+
     return <div className="mt-3 w-100">
         {!loading ? <>
-            <input value={Otp} onChange={e => setOtp(e.target.value)} id="login" placeholder="Enter Google Auth Code" className="form-control" />
+            <div>
+                <h5>Please Enter Google Auth Code</h5>
+                <input
+                    ref={inputRef}
+                    value={Otp}
+                    onChange={e => setOtp(e.target.value)}
+                    id="login"
+                    placeholder="Enter Google Auth Code"
+                    className="form-control"
+                />
+            </div>
+
             {
                 error ? <div className="text-danger mt-1 w-100">
                     <p className="p-0">{error}</p>

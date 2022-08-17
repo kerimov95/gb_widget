@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../lib/hooks/useAuth";
 import { SpinnerCenter } from '../../spinnerCenter';
 
@@ -7,6 +7,14 @@ export const LoginComponent = ({ EventAuth }) => {
     const [user, loading, error, setLoginAndPassword] = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const loginRef = useRef();
+
+    useEffect(() => {
+        if (loginRef.current) {
+            loginRef.current.focus();
+        }
+    }, [loginRef])
 
     useEffect(() => {
         EventAuth(user);
@@ -26,10 +34,22 @@ export const LoginComponent = ({ EventAuth }) => {
             <h5 className="text-center">Sign in to Globiance</h5>
         </div>
         <div className="mt-3 w-100">
-            <input value={email} onChange={e => setEmail(e.target.value)} id="login" placeholder="Email address" className="form-control" />
+            <input
+                ref={loginRef}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                id="login"
+                placeholder="Email address"
+                className="form-control" />
         </div>
         <div className="mt-3 w-100">
-            <input value={password} onChange={e => setPassword(e.target.value)} id="password" type="password" placeholder="Password" className="form-control" />
+            <input
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                id="password"
+                type="password"
+                placeholder="Password"
+                className="form-control" />
         </div>
         {
             error ? <div className="text-danger mt-1 w-100">

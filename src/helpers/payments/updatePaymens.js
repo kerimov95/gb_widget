@@ -25,13 +25,19 @@ const updatePauments = async () => {
                         payments[i].statusConfirmation = true;
                         payments[i].action = false
                         const order = await db.MerchantCheckout.findOne({
+                            include: ['MerchantKey'],
                             where: {
                                 uniqueId: payments[i].MerchantCheckout.uniqueId
                             }
                         })
                         order.status = 'Paid';
+                        order.isActive = false;
                         await order.save();
                         await payments[i].save();
+
+                        const free = Math.round((payments[i].amount * order.MerchantKey.officialFee / 100) * 10000000) / 10000000;
+                        const amount = Math.round((payments[i].amount - free) * 10000000) / 10000000;
+
                         const balances = await db.MerchantBalance.findOne({
                             where: {
                                 merchantUserId: payments[i].userId,
@@ -39,20 +45,30 @@ const updatePauments = async () => {
                             }
                         })
                         if (balances) {
-                            balances.amount += payments[i].amount;
+                            balances.amount += amount;
                             await balances.save();
                         }
                         else {
                             const newBalance = await db.MerchantBalance.create({
                                 merchantUserId: payments[i].userId,
                                 currencyName: payments[i].label,
-                                amount: payments[i].amount,
+                                amount: amount,
                                 typeOfRecord: 'merchant',
                                 isActive: true,
                                 emailId: payments[i].User.email
                             });
                             await newBalance.save();
                         }
+
+                        db.MerchantFeeDistribution.create({
+                            merchantUserId: payments[i].userId,
+                            checkoutId: payments[i].MerchantCheckout.uniqueId,
+                            amount: free,
+                            transactionID: payments[i].txid,
+                            currencyName: payments[i].label,
+                            isMerchant: true
+                        })
+
                         continue;
                     }
                     else {
@@ -66,7 +82,7 @@ const updatePauments = async () => {
                                     uniqueId: payments[i].MerchantCheckout.uniqueId
                                 }
                             })
-                            order.status = 'expired';
+                            order.status = 'Expired';
                             payments[i].action = false;
                             payments[i].isActive = false;
                             await payments[i].save();

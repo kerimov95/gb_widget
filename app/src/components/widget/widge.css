@@ -43,3 +43,9 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.whitelist-component {
+    min-height: 50px;
+    max-height: 500px;
+    overflow: auto;
+}

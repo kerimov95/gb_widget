@@ -8,6 +8,7 @@ import { Context } from '../../app/app';
 import { SuccessfulComponent } from './successfulComponent';
 import { GlobianceQRComponent } from './globianceQRComponent';
 import { GlobianceAuthComponent } from './globianceAuthComponent/globianceAuthComponent';
+import { WhitelistComponent } from './whitelistComponent';
 
 const Switch = ({ tabName, children }) => {
     return <Context.Consumer>
@@ -51,6 +52,9 @@ export const ModalComponent = () => {
                 </Switch>
                 <Switch tabName="globianceAuth">
                     <GlobianceAuthComponent />
+                </Switch>
+                <Switch tabName="whitelist">
+                    <WhitelistComponent />
                 </Switch>
             </Modal.Body>
         </Modal >}

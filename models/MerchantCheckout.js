@@ -93,5 +93,21 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'MerchantCheckout',
     });
 
+    MerchantCheckout.associate = function (models) {
+        // associations can be defined here
+        MerchantCheckout.belongsTo(models.User, {
+            as: 'User',
+            foreignKey: 'userId',
+            onDelete: 'CASCADE',
+            targetKey: 'uniqueId'
+        });
+        MerchantCheckout.belongsTo(models.MerchantKey, {
+            as: 'MerchantKey',
+            foreignKey: 'merchantKeys',
+            onDelete: 'CASCADE',
+            targetKey: 'uniqueId'
+        });
+    };
+
     return MerchantCheckout;
 };
